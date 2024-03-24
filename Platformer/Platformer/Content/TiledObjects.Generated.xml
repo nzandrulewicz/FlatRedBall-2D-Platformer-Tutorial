@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objecttypes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <objecttype name="Player">
+    <property name="TeamIndex" type="int" default="0" />
+    <property name="MaxHealth" type="float" default="100" />
+  </objecttype>
+</objecttypes>
