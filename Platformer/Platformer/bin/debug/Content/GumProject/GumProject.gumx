@@ -3,8 +3,8 @@
   <CustomProperties />
   <FontRanges>32-126,160-255</FontRanges>
   <Version>1</Version>
-  <DefaultCanvasWidth>480</DefaultCanvasWidth>
-  <DefaultCanvasHeight>360</DefaultCanvasHeight>
+  <DefaultCanvasWidth>800</DefaultCanvasWidth>
+  <DefaultCanvasHeight>600</DefaultCanvasHeight>
   <ShowOutlines>true</ShowOutlines>
   <ShowCanvasOutline>true</ShowCanvasOutline>
   <ShowRuler>true</ShowRuler>
@@ -13,24 +13,8 @@
   <RestrictToUnitValues>true</RestrictToUnitValues>
   <RestrictFileNamesForAndroid>false</RestrictFileNamesForAndroid>
   <Guides />
-  <ParentProjectRoot>../</ParentProjectRoot>
   <ShowLocalizationInGum>true</ShowLocalizationInGum>
   <CurrentLanguageIndex>0</CurrentLanguageIndex>
-  <ScreenReference>
-    <Name>GameScreenGum</Name>
-    <ElementType>Screen</ElementType>
-    <LinkType>ReferenceOriginal</LinkType>
-  </ScreenReference>
-  <ScreenReference>
-    <Name>Level1Gum</Name>
-    <ElementType>Screen</ElementType>
-    <LinkType>ReferenceOriginal</LinkType>
-  </ScreenReference>
-  <ScreenReference>
-    <Name>Level2Gum</Name>
-    <ElementType>Screen</ElementType>
-    <LinkType>ReferenceOriginal</LinkType>
-  </ScreenReference>
   <ComponentReference>
     <Name>Controls/ButtonClose</Name>
     <ElementType>Component</ElementType>

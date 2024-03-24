@@ -3,8 +3,5 @@
   <objecttype name="Player">
     <property name="TeamIndex" type="int" default="0" />
     <property name="MaxHealth" type="float" default="100" />
-    <property name="GroundMovement" type="Platformer.DataTypes.PlatformerValues" default="Ground in PlatformerValuesStatic.csv" />
-    <property name="AirMovement" type="Platformer.DataTypes.PlatformerValues" default="Air in PlatformerValuesStatic.csv" />
-    <property name="AfterDoubleJump" type="Platformer.DataTypes.PlatformerValues" />
   </objecttype>
 </objecttypes>

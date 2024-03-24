@@ -162,6 +162,12 @@
       ],
       "InstructionSaves": [
         {
+          "Type": "float",
+          "Member": "TextureScale",
+          "Value": 1.0,
+          "Time": 0.0
+        },
+        {
           "Type": "AnimationChainList",
           "Member": "AnimationChains",
           "Value": "PlatformerAnimations",
@@ -171,12 +177,6 @@
           "Type": "string",
           "Member": "CurrentChainName",
           "Value": "CharacterWalkRight",
-          "Time": 0.0
-        },
-        {
-          "Type": "float",
-          "Member": "TextureScale",
-          "Value": 1.0,
           "Time": 0.0
         }
       ],
@@ -198,14 +198,14 @@
       "InstructionSaves": [
         {
           "Type": "float",
-          "Member": "Height",
-          "Value": 16.0,
+          "Member": "Width",
+          "Value": 10.0,
           "Time": 0.0
         },
         {
           "Type": "float",
-          "Member": "Width",
-          "Value": 10.0,
+          "Member": "Height",
+          "Value": 16.0,
           "Time": 0.0
         },
         {
