@@ -2,6 +2,7 @@
 #define SupportsEditMode
 #define ScreenManagerHasPersistentPolygons
 #define SpriteHasTolerateMissingAnimations
+#define HasGum
 using Platformer;
 
 ﻿using Newtonsoft.Json;
