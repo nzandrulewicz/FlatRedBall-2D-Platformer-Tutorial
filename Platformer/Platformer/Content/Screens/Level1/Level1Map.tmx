@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
  <tileset firstgid="1" source="../../StandardTileset.tsx"/>
- <layer id="1" name="GameplayLayer" width="40" height="16" tintcolor="#ffffff">
+ <tileset firstgid="1025" source="../../Art.tsx"/>
+ <layer id="3" name="SkyLayer" width="40" height="16">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACktnZWBIH8WjeBSP4lE8ikfxKB7FIwYDAHgzG68ACgAA
+  </data>
+ </layer>
+ <layer id="4" name="CloudLayer" width="40" height="16" parallaxx="0.3" parallaxy="0.3">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGBpgGSsDw3IgXsE6sO5YDbR/DRY3HAOKHQfiE0S4D5cZ+ACx/j8NlD+DRc0zoNhzIH5BhL24zMAHSPE/LQGusCXF/6QAUtMlOWFLCRgs8YIL0CpehiMgp9ygJ6B32h4oMBoPo2C4AADC6EJ8AAoAAA==
+  </data>
+ </layer>
+ <layer id="1" name="GameplayLayer" width="40" height="16" visible="0" tintcolor="#ffffff">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACmNkGLyAEYoHKxh1H2Vg1H2UgcHmPkYceLAAermPGPOxyY/E8CPFLEJqhnP40cNPwzn86AFwuW8wYwC0G+5aAAoAAA==
+  </data>
+ </layer>
+ <layer id="2" name="GroundVisuals" width="40" height="16">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACktmZRi0IBHotuRR95ENRt1HGRh1H2nAEegWJyScOsjcBwqvJDRMC/cdBJp5CIoP4zD/IBZ5ermPXEAL9xETVshq8akZzuFHSjgNhPvoAYai+1LQysSBxKlY3AcA0ZxyAQAKAAA=
   </data>
  </layer>
 </map>

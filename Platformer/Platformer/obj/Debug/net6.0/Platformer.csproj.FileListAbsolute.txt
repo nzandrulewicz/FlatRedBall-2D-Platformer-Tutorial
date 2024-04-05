@@ -117,3 +117,4 @@ C:\Users\PC\Desktop\FlatRedBall\Tutorials\FlatRedBall-2D-Platformer-Tutorial\Pla
 C:\Users\PC\Desktop\FlatRedBall\Tutorials\FlatRedBall-2D-Platformer-Tutorial\Platformer\Platformer\obj\Debug\net6.0\Platformer.pdb
 C:\Users\PC\Desktop\FlatRedBall\Tutorials\FlatRedBall-2D-Platformer-Tutorial\Platformer\Platformer\obj\Debug\net6.0\Platformer.genruntimeconfig.cache
 C:\Users\PC\Desktop\FlatRedBall\Tutorials\FlatRedBall-2D-Platformer-Tutorial\Platformer\Platformer\obj\Debug\net6.0\ref\Platformer.dll
+C:\Users\PC\Desktop\FlatRedBall\Tutorials\FlatRedBall-2D-Platformer-Tutorial\Platformer\Platformer\bin\Debug\content\art.tsx
