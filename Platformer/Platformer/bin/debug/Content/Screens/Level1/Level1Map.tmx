@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="1">
  <tileset firstgid="1" source="../../StandardTileset.tsx"/>
  <tileset firstgid="1025" source="../../Art.tsx"/>
- <layer id="3" name="SkyLayer" width="40" height="16">
+ <layer id="3" name="SkyLayer" width="40" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACktnZWBIH8WjeBSP4lE8ikfxKB7FIwYDAHgzG68ACgAA
+   H4sIAAAAAAAACu3DMQ0AAAwDoD7TWv8OKmMPJPSSqqqqqq8H0fe/zqAPAAA=
   </data>
  </layer>
- <layer id="4" name="CloudLayer" width="40" height="16" parallaxx="0.3" parallaxy="0.3">
+ <layer id="4" name="CloudLayer" width="40" height="25" parallaxx="0.3" parallaxy="0.3">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNgGBpgGSsDw3IgXsE6sO5YDbR/DRY3HAOKHQfiE0S4D5cZ+ACx/j8NlD+DRc0zoNhzIH5BhL24zMAHSPE/LQGusCXF/6QAUtMlOWFLCRgs8YIL0CpehiMgp9ygJ6B32h4oMBoPo2C4AADC6EJ8AAoAAA==
+   H4sIAAAAAAAACu3UUQqAIAwG4L14/1tUUOeooM5RHaP/AE42Qw35P9iLim5OFCEiIso3BJERMYW2ecw4f4nksGJsQ+yG/LQ9Uqz1H5g/I2sujN2Ix3CutkeKp/6StLv11O/hfZc5d/vFX/qiKdWXHuX8GzXVftutsA/Uixc2bbi1oA8AAA==
   </data>
  </layer>
- <layer id="1" name="GameplayLayer" width="40" height="16" visible="0" tintcolor="#ffffff">
+ <layer id="1" name="GameplayLayer" width="40" height="25" visible="0" tintcolor="#ffffff">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNkGLyAEYoHKxh1H2Vg1H2UgcHmPkYceLAAermPGPOxyY/E8CPFLEJqhnP40cNPwzn86AFwuW8wYwC0G+5aAAoAAA==
+   H4sIAAAAAAAACu3Q0QkAIAgAUd1/6RbIMgQTvQd+FXEpAgAz6e+AAxX6IuiLoS+mWp8aU0VWn+f93fnE/b28dbvTeX8Zf+q8vwxWX+VZLiqHv6APAAA=
   </data>
  </layer>
- <layer id="2" name="GroundVisuals" width="40" height="16">
+ <layer id="2" name="GroundVisuals" width="40" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACktmZRi0IBHotuRR95ENRt1HGRh1H2nAEegWJyScOsjcBwqvJDRMC/cdBJp5CIoP4zD/IBZ5ermPXEAL9xETVshq8akZzuFHSjgNhPvoAYai+1LQysSBxKlY3AcA0ZxyAQAKAAA=
+   H4sIAAAAAAAACmNgGAWjYBSMgpEJnFkH2gW4gSPQbcmD2H2Jo+6jCIy6jzIw6j7SAKg8cULCqYPMfaDwSkLDtHDfQaCZh6D4MA7zD2KRp5f7yAW0cB8xYYWsFp+a4Rx+pITTQLiPHmAoui8FrUwcSJyKxX0A669LPKAPAAA=
+  </data>
+ </layer>
+ <layer id="12" name="TopCloudLayer" width="40" height="25" parallaxx="0.1" parallaxy="0.1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3PQQoAEBRFURP7XwcbERsRq/BlKvyiDO6pO3lJBGtM2FQPztzMSV6xa9L+pUy2KCXFvrrr5dt7+fMAAAAAAEMDVAFxgaAPAAA=
   </data>
  </layer>
 </map>
