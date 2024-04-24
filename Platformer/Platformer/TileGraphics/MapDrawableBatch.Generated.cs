@@ -125,11 +125,10 @@ namespace FlatRedBall.TileGraphics
         protected VertexType[] mVertices;
 
         protected Texture2D mTexture;
-        #region XML Docs
+
         /// <summary>
         /// The indices to draw the shape
         /// </summary>
-        #endregion
         protected int[] mIndices;
 
         Dictionary<string, List<int>> mNamedTileOrderedIndexes = new Dictionary<string, List<int>>();
@@ -161,6 +160,9 @@ namespace FlatRedBall.TileGraphics
             set { mBlue = value; }
         }
 
+        /// <summary>
+        /// Modifies the transparency of the map. By default this value equals 1 which means it is drawn at full opacity. A value of 0 makes the map fully transparent.
+        /// </summary>
         public float Alpha
         {
             get { return mAlpha; }
@@ -212,6 +214,11 @@ namespace FlatRedBall.TileGraphics
             get { return true; }
         }
 
+        /// <summary>
+        /// Mulitplier value used to scale the rendering of the map. 
+        /// A value of 1 (default) means the map is rendered at its original size.
+        /// A value of 2 would render the map at twice its size.
+        /// </summary>
         public float RenderingScale
         {
             get;
@@ -252,6 +259,23 @@ namespace FlatRedBall.TileGraphics
             }
         }
 
+        /// <summary>
+        /// The vertices used to draw the map. These are typically not directly manipulated, but rather are set internally
+        /// when converting from a .TMX.
+        /// </summary>
+        /// <remarks>
+        /// Typically when dealing with the vertices, we deal with "quads"
+        /// The number of vertices should be divisible by 4, where each quad
+        /// is 4 vertices. Therefore, to get the bottom-left vertex of a quad
+        /// by quad index, you would do:
+        /// var vertexIndex = quadIndex * 4;
+        /// var bottomLeft = mVertices[vertexIndex];
+        /// 
+        /// Vertices are in counterclockwise order, starting with the bottom-left:
+        /// 3   2
+        ///
+        /// 0   1
+        /// </remarks>
         public VertexType[] Vertices => mVertices;
 
         public Texture2D Texture
@@ -364,61 +388,6 @@ namespace FlatRedBall.TileGraphics
 
             mTileset = new Tileset(texture, textureTileDimensionWidth, textureTileDimensionHeight);
         }
-
-        //public MapDrawableBatch(int mapWidth, int mapHeight, float mapTileDimension, int textureTileDimension, string tileSetFilename)
-        //    : base()
-        //{
-        //    InternalInitialize();
-
-
-        //    mTileset = new Tileset(tileSetFilename, textureTileDimension);
-        //    mMapWidth = mapWidth;
-        //    mMapHeight = mapHeight;
-
-        //    int numberOfTiles = mapWidth * mapHeight;
-        //    // the number of vertices is 4 times the number of tiles (each tile gets 4 vertices) 
-        //    mVertices = new VertexPositionTexture[4 * numberOfTiles];
-
-        //    // the number of indices is 6 times the number of tiles
-        //    mIndices = new short[6 * numberOfTiles];
-        //    for(int i = 0; i < mapHeight; i++)
-        //    {
-        //        for (int j = 0; j < mapWidth; j++)
-        //        {
-        //            int currentTile         = mapHeight * i + j;
-        //            int currentVertex       = currentTile * 4;
-        //            float xOffset = j * mapTileDimension;
-        //            float yOffset = i * mapTileDimension;
-        //            int currentIndex        = currentTile * 6; // 6 indices per tile
-
-        //            // TEMP
-        //            Vector2[] coords = mTileset.GetTextureCoordinateVectorsOfTextureIndex(new Random().Next()%4);
-        //            // END TEMP
-
-
-        //            // create vertices
-        //            mVertices[currentVertex + 0] = new VertexPositionTexture(new Vector3(xOffset + 0f, yOffset + 0f, 0f), coords[0]);
-        //            mVertices[currentVertex + 1] = new VertexPositionTexture(new Vector3(xOffset + mapTileDimension, yOffset + 0f, 0f), coords[1]);
-        //            mVertices[currentVertex + 2] = new VertexPositionTexture(new Vector3(xOffset + mapTileDimension, yOffset + mapTileDimension, 0f), coords[2]);
-        //            mVertices[currentVertex + 3] = new VertexPositionTexture(new Vector3(xOffset + 0f, yOffset + mapTileDimension, 0f), coords[3]);
-
-
-        //            // create indices
-        //            mIndices[currentIndex + 0] = (short)(currentVertex + 0);
-        //            mIndices[currentIndex + 1] = (short)(currentVertex + 1);
-        //            mIndices[currentIndex + 2] = (short)(currentVertex + 2);
-        //            mIndices[currentIndex + 3] = (short)(currentVertex + 0);
-        //            mIndices[currentIndex + 4] = (short)(currentVertex + 2);
-        //            mIndices[currentIndex + 5] = (short)(currentVertex + 3);
-
-        //            mCurrentNumberOfTiles++; 
-        //        }
-        //    }
-        //    mTexture = FlatRedBallServices.Load<Texture2D>(@"content/tiles");
-
-
-
-        //}
 
         void InternalInitialize()
         {
@@ -570,7 +539,7 @@ namespace FlatRedBall.TileGraphics
             string textureName = reducedLayerInfo.Texture;
 
 
-#if IOS || ANDROID
+#if (IOS || ANDROID) && !NET8_0_OR_GREATER
 
 			textureName = textureName.ToLowerInvariant();
 
@@ -1064,6 +1033,7 @@ namespace FlatRedBall.TileGraphics
 
         /// <summary>
         /// Returns the quad index at the argument worldX and worldY. Returns null if no quad is found at this index.
+        /// If the map has a SortAxis of X or Y, then this funcion uses the sorting to find the quad more quickly.
         /// </summary>
         /// <param name="worldX">The absolute world X position.</param>
         /// <param name="worldY">The absolute world Y position.</param>
@@ -1656,11 +1626,9 @@ namespace FlatRedBall.TileGraphics
             set;
         }
 
-        #region XML Docs
         /// <summary>
         /// Don't call this, instead call SpriteManager.RemoveDrawableBatch
         /// </summary>
-        #endregion
         public void Destroy()
         {
             this.RemoveSelfFromListsBelongingTo();

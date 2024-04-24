@@ -99,6 +99,9 @@
   ],
   "EntityReferences": [
     {
+      "Name": "Entities\\Coin"
+    },
+    {
       "Name": "Entities\\Player"
     }
   ],

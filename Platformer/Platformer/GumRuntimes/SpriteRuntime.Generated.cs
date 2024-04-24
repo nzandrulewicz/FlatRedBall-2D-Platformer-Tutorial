@@ -2282,14 +2282,24 @@ namespace Platformer.GumRuntimes
             foreach (var animation in animations)
             {
                 var sprite = this.RenderableComponent as RenderingLibrary.Graphics.Sprite;
+                sprite.Animate = true;
                 sprite.CurrentChainName = animation;
                 sprite.TimeIntoAnimation = 0;
                 sprite.CurrentFrameIndex = 0;
                 sprite.UpdateToCurrentAnimationFrame();
+                if (sprite.CurrentChain == null)
+                {
+                    throw new System.InvalidOperationException($"Could not find the animation {animation}");
+                }
                 // subtract second difference to prevent it from looping once if it happens to fall mid-frame
                 // Due to frame order, we need to delay one frame less, and multiply by 1.1 to fix possible accuracy issues
                 await FlatRedBall.TimeManager.DelaySeconds(sprite.CurrentChain.TotalLength - FlatRedBall.TimeManager.SecondDifference * 1.1f);
             }
+        }
+        public double TimeIntoAnimation
+        {
+            get => ContainedSprite.TimeIntoAnimation;
+            set => ContainedSprite.TimeIntoAnimation = value;
         }
     }
 }

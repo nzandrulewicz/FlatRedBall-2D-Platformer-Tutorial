@@ -9,17 +9,18 @@ namespace Platformer.Factories
     public class PlayerFactory : IEntityFactory
     {
         public static FlatRedBall.Math.Axis? SortAxis { get; set;}
+        public static Layer DefaultLayer { get; set; }
         public static Player CreateNew (float x = 0, float y = 0, float z = 0) 
         {
-            return CreateNew(null, x, y, z);
+            return CreateNew(DefaultLayer, x, y, z);
         }
         public static Player CreateNew (Microsoft.Xna.Framework.Vector3 position) 
         {
-            return CreateNew(null, position.X, position.Y, position.Z);
+            return CreateNew(DefaultLayer, position.X, position.Y, position.Z);
         }
         public static Player CreateNew (Microsoft.Xna.Framework.Vector2 position) 
         {
-            return CreateNew(null, position.X, position.Y, 0);
+            return CreateNew(DefaultLayer, position.X, position.Y, 0);
         }
         public static Player CreateNew (Layer layer, Microsoft.Xna.Framework.Vector3 position) 
         {

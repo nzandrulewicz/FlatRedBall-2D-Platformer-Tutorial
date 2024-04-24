@@ -20,6 +20,7 @@ namespace Platformer.Screens
         
         protected FlatRedBall.Math.PositionedObjectList<Platformer.Entities.Player> PlayerList = new FlatRedBall.Math.PositionedObjectList<Platformer.Entities.Player>();
         protected Platformer.Entities.Player Player1;
+        protected FlatRedBall.Math.PositionedObjectList<Platformer.Entities.Coin> CoinList = new FlatRedBall.Math.PositionedObjectList<Platformer.Entities.Coin>();
         protected FlatRedBall.TileGraphics.LayeredTileMap Map;
         protected FlatRedBall.TileCollisions.TileShapeCollection mSolidCollision;
         public FlatRedBall.TileCollisions.TileShapeCollection SolidCollision
@@ -62,6 +63,7 @@ namespace Platformer.Screens
         	: base (contentManagerName)
         {
             PlayerList.Name = "PlayerList";
+            CoinList.Name = "CoinList";
             // Not instantiating for FlatRedBall.TileGraphics.LayeredTileMap Map in Screens\GameScreen (Screen) because properties on the object prevent it
             // Not instantiating for FlatRedBall.TileCollisions.TileShapeCollection SolidCollision in Screens\GameScreen (Screen) because properties on the object prevent it
             // Not instantiating for FlatRedBall.TileCollisions.TileShapeCollection CloudCollision in Screens\GameScreen (Screen) because properties on the object prevent it
@@ -74,6 +76,7 @@ namespace Platformer.Screens
             Player1 = new Platformer.Entities.Player(ContentManagerName, false);
             Player1.Name = "Player1";
             Player1.CreationSource = "Glue";
+            CoinList?.Clear();
             // Not instantiating for FlatRedBall.TileGraphics.LayeredTileMap Map in Screens\GameScreen (Screen) because properties on the object prevent it
             // Not instantiating for FlatRedBall.TileCollisions.TileShapeCollection SolidCollision in Screens\GameScreen (Screen) because properties on the object prevent it
             // Not instantiating for FlatRedBall.TileCollisions.TileShapeCollection CloudCollision in Screens\GameScreen (Screen) because properties on the object prevent it
@@ -170,6 +173,14 @@ PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
                         PlayerList[i].Activity();
                     }
                 }
+                for (int i = CoinList.Count - 1; i > -1; i--)
+                {
+                    if (i < CoinList.Count)
+                    {
+                        // We do the extra if-check because activity could destroy any number of entities
+                        CoinList[i].Activity();
+                    }
+                }
                 CameraControllingEntityInstance.Activity();
             }
             else
@@ -201,13 +212,19 @@ PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
             RenderingLibrary.SystemManagers.Default.Renderer.RemoveLayer(HudLayerGum);
             base.Destroy();
             Factories.PlayerFactory.Destroy();
+            Factories.CoinFactory.Destroy();
             GameScreenGum.RemoveFromManagers(); FlatRedBall.FlatRedBallServices.GraphicsOptions.SizeOrOrientationChanged -= RefreshLayoutInternal;
             GameScreenGum = null;
             
             PlayerList.MakeOneWay();
+            CoinList.MakeOneWay();
             for (int i = PlayerList.Count - 1; i > -1; i--)
             {
                 PlayerList[i].Destroy();
+            }
+            for (int i = CoinList.Count - 1; i > -1; i--)
+            {
+                CoinList[i].Destroy();
             }
             if (HudLayer != null)
             {
@@ -218,6 +235,7 @@ PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
                 FlatRedBall.SpriteManager.RemovePositionedObject(CameraControllingEntityInstance);;
             }
             PlayerList.MakeTwoWay();
+            CoinList.MakeTwoWay();
             FlatRedBall.Math.Collision.CollisionManager.Self.BeforeCollision -= HandleBeforeCollisionGenerated;
             FlatRedBall.Math.Collision.CollisionManager.Self.Relationships.Clear();
             CustomDestroy();
@@ -272,6 +290,10 @@ PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
             {
                 PlayerList[i].Destroy();
             }
+            for (int i = CoinList.Count - 1; i > -1; i--)
+            {
+                CoinList[i].Destroy();
+            }
             if (HudLayer != null)
             {
                 FlatRedBall.SpriteManager.RemoveLayer(HudLayer);
@@ -320,6 +342,10 @@ PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
             for (int i = 0; i < PlayerList.Count; i++)
             {
                 PlayerList[i].ConvertToManuallyUpdated();
+            }
+            for (int i = 0; i < CoinList.Count; i++)
+            {
+                CoinList[i].ConvertToManuallyUpdated();
             }
             if (Map != null)
             {
@@ -379,7 +405,9 @@ PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
         private void InitializeFactoriesAndSorting () 
         {
             Factories.PlayerFactory.Initialize(ContentManagerName);
+            Factories.CoinFactory.Initialize(ContentManagerName);
             Factories.PlayerFactory.AddList(PlayerList);
+            Factories.CoinFactory.AddList(CoinList);
         }
         [System.Obsolete("Use GetFile instead")]
         public static object GetStaticMember (string memberName) 
@@ -435,6 +463,22 @@ PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
                 }
                 item.ObjectsCollidedAgainst.Clear();
             }
+            for (int i = 0; i < CoinList.Count; i++)
+            {
+                var item = CoinList[i];
+                item.LastFrameItemsCollidedAgainst.Clear();
+                foreach (var name in item.ItemsCollidedAgainst)
+                {
+                    item.LastFrameItemsCollidedAgainst.Add(name);
+                }
+                item.ItemsCollidedAgainst.Clear();
+                item.LastFrameObjectsCollidedAgainst.Clear();
+                foreach (var name in item.ObjectsCollidedAgainst)
+                {
+                    item.LastFrameObjectsCollidedAgainst.Add(name);
+                }
+                item.ObjectsCollidedAgainst.Clear();
+            }
         }
         protected virtual void FillCollisionForSolidCollision () 
         {
@@ -469,8 +513,30 @@ PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
         public Performance.IEntityFactory Factory { get; set; }
         public Func<string, object> GetFile {get; private set; }
         public Action<string> LoadStaticContent { get; private set; }
-        public GameScreen CreateNew(Microsoft.Xna.Framework.Vector3 position) => Factory.CreateNew(position) as GameScreen;
-        public GameScreen CreateNew(float x = 0, float y = 0) => Factory.CreateNew(x, y) as GameScreen;
+        public GameScreen CreateNew (Microsoft.Xna.Framework.Vector3 position) 
+        {
+            if (this.Factory != null)
+            {
+                var toReturn = Factory.CreateNew(position.X, position.Y) as GameScreen;
+                return toReturn;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public GameScreen CreateNew (float x = 0, float y = 0) 
+        {
+            if (this.Factory != null)
+            {
+                var toReturn = Factory.CreateNew(x, y) as GameScreen;
+                return toReturn;
+            }
+            else
+            {
+                return null;
+            }
+        }
         public static GameScreenType FromName (string name) 
         {
             switch(name)

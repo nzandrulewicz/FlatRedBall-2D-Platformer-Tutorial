@@ -29,6 +29,7 @@ namespace Platformer.Screens
         	: base (contentManagerName)
         {
             // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Player> PlayerList in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
+            // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Coin> CoinList in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
         }
         public override void Initialize (bool addToManagers) 
         {
@@ -38,6 +39,7 @@ namespace Platformer.Screens
             mCloudCollision = new FlatRedBall.TileCollisions.TileShapeCollection(); mCloudCollision.Name = "CloudCollision";
             // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Player> PlayerList in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
             // skipping instantiation of Player Player1 in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
+            // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Coin> CoinList in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
             GumScreen = Level2Gum;
             Forms = Level2Gum.FormsControl ?? new Platformer.FormsControls.Screens.Level2GumForms(Level2Gum);
             
@@ -110,21 +112,39 @@ namespace Platformer.Screens
             bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
             base.PostInitialize();
-            if (Player1.Parent == null)
+            if (Map!= null)
             {
-                base.Player1.X = 64f;
             }
-            else
+            if (SolidCollision!= null)
             {
-                base.Player1.RelativeX = 64f;
             }
-            if (Player1.Parent == null)
+            if (CloudCollision!= null)
             {
-                base.Player1.Y = -64f;
             }
-            else
+            if (PlayerList!= null)
             {
-                base.Player1.RelativeY = -64f;
+                if (Player1!= null)
+                {
+                    if (Player1.Parent == null)
+                    {
+                        base.Player1.X = 64f;
+                    }
+                    else
+                    {
+                        base.Player1.RelativeX = 64f;
+                    }
+                    if (Player1.Parent == null)
+                    {
+                        base.Player1.Y = -64f;
+                    }
+                    else
+                    {
+                        base.Player1.RelativeY = -64f;
+                    }
+                }
+            }
+            if (CoinList!= null)
+            {
             }
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
         }

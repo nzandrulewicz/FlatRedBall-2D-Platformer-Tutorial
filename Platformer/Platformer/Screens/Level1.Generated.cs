@@ -19,6 +19,9 @@ namespace Platformer.Screens
         protected static Platformer.GumRuntimes.Level1GumRuntime Level1Gum;
         protected static FlatRedBall.TileGraphics.LayeredTileMap Level1Map;
         
+        private Platformer.Entities.Coin Coin1;
+        private Platformer.Entities.Coin Coin2;
+        private Platformer.Entities.Coin Coin3;
         Platformer.FormsControls.Screens.Level1GumForms Forms;
         Platformer.GumRuntimes.Level1GumRuntime GumScreen;
         public Level1 () 
@@ -29,6 +32,7 @@ namespace Platformer.Screens
         	: base (contentManagerName)
         {
             // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Player> PlayerList in Screens\Level1 (Screen) because it has its InstantiatedByBase set to true
+            // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Coin> CoinList in Screens\Level1 (Screen) because it has its InstantiatedByBase set to true
         }
         public override void Initialize (bool addToManagers) 
         {
@@ -38,6 +42,16 @@ namespace Platformer.Screens
             mCloudCollision = new FlatRedBall.TileCollisions.TileShapeCollection(); mCloudCollision.Name = "CloudCollision";
             // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Player> PlayerList in Screens\Level1 (Screen) because it has its InstantiatedByBase set to true
             // skipping instantiation of Player Player1 in Screens\Level1 (Screen) because it has its InstantiatedByBase set to true
+            // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Coin> CoinList in Screens\Level1 (Screen) because it has its InstantiatedByBase set to true
+            Coin1 = new Platformer.Entities.Coin(ContentManagerName, false);
+            Coin1.Name = "Coin1";
+            Coin1.CreationSource = "Glue";
+            Coin2 = new Platformer.Entities.Coin(ContentManagerName, false);
+            Coin2.Name = "Coin2";
+            Coin2.CreationSource = "Glue";
+            Coin3 = new Platformer.Entities.Coin(ContentManagerName, false);
+            Coin3.Name = "Coin3";
+            Coin3.CreationSource = "Glue";
             GumScreen = Level1Gum;
             Forms = Level1Gum.FormsControl ?? new Platformer.FormsControls.Screens.Level1GumForms(Level1Gum);
             
@@ -54,6 +68,9 @@ namespace Platformer.Screens
             InitializeFactoriesAndSorting();
             
             
+            Coin1.AddToManagers(mLayer);
+            Coin2.AddToManagers(mLayer);
+            Coin3.AddToManagers(mLayer);
             base.AddToManagers();
             CustomInitialize();
         }
@@ -110,21 +127,99 @@ namespace Platformer.Screens
             bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
             base.PostInitialize();
-            if (Player1.Parent == null)
+            if (Map!= null)
             {
-                base.Player1.X = 64f;
             }
-            else
+            if (SolidCollision!= null)
             {
-                base.Player1.RelativeX = 64f;
             }
-            if (Player1.Parent == null)
+            if (CloudCollision!= null)
             {
-                base.Player1.Y = -64f;
             }
-            else
+            if (PlayerList!= null)
             {
-                base.Player1.RelativeY = -64f;
+                if (Player1!= null)
+                {
+                    if (Player1.Parent == null)
+                    {
+                        base.Player1.X = 64f;
+                    }
+                    else
+                    {
+                        base.Player1.RelativeX = 64f;
+                    }
+                    if (Player1.Parent == null)
+                    {
+                        base.Player1.Y = -384f;
+                    }
+                    else
+                    {
+                        base.Player1.RelativeY = -384f;
+                    }
+                }
+            }
+            if (CoinList!= null)
+            {
+                if (!CoinList.Contains(Coin1))
+                {
+                    CoinList.Add(Coin1);
+                }
+                if (Coin1.Parent == null)
+                {
+                    Coin1.X = 192f;
+                }
+                else
+                {
+                    Coin1.RelativeX = 192f;
+                }
+                if (Coin1.Parent == null)
+                {
+                    Coin1.Y = -320f;
+                }
+                else
+                {
+                    Coin1.RelativeY = -320f;
+                }
+                if (!CoinList.Contains(Coin2))
+                {
+                    CoinList.Add(Coin2);
+                }
+                if (Coin2.Parent == null)
+                {
+                    Coin2.X = 288f;
+                }
+                else
+                {
+                    Coin2.RelativeX = 288f;
+                }
+                if (Coin2.Parent == null)
+                {
+                    Coin2.Y = -288f;
+                }
+                else
+                {
+                    Coin2.RelativeY = -288f;
+                }
+                if (!CoinList.Contains(Coin3))
+                {
+                    CoinList.Add(Coin3);
+                }
+                if (Coin3.Parent == null)
+                {
+                    Coin3.X = 368f;
+                }
+                else
+                {
+                    Coin3.RelativeX = 368f;
+                }
+                if (Coin3.Parent == null)
+                {
+                    Coin3.Y = -256f;
+                }
+                else
+                {
+                    Coin3.RelativeY = -256f;
+                }
             }
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
         }
@@ -154,6 +249,9 @@ namespace Platformer.Screens
             base.AssignCustomVariables(callOnContainedElements);
             if (callOnContainedElements)
             {
+                Coin1.AssignCustomVariables(true);
+                Coin2.AssignCustomVariables(true);
+                Coin3.AssignCustomVariables(true);
             }
             if (Player1.Parent == null)
             {
@@ -165,12 +263,61 @@ namespace Platformer.Screens
             }
             if (Player1.Parent == null)
             {
-                base.Player1.Y = -64f;
+                base.Player1.Y = -384f;
             }
             else
             {
-                base.Player1.RelativeY = -64f;
+                base.Player1.RelativeY = -384f;
             }
+            if (Coin1.Parent == null)
+            {
+                Coin1.X = 192f;
+            }
+            else
+            {
+                Coin1.RelativeX = 192f;
+            }
+            if (Coin1.Parent == null)
+            {
+                Coin1.Y = -320f;
+            }
+            else
+            {
+                Coin1.RelativeY = -320f;
+            }
+            if (Coin2.Parent == null)
+            {
+                Coin2.X = 288f;
+            }
+            else
+            {
+                Coin2.RelativeX = 288f;
+            }
+            if (Coin2.Parent == null)
+            {
+                Coin2.Y = -288f;
+            }
+            else
+            {
+                Coin2.RelativeY = -288f;
+            }
+            if (Coin3.Parent == null)
+            {
+                Coin3.X = 368f;
+            }
+            else
+            {
+                Coin3.RelativeX = 368f;
+            }
+            if (Coin3.Parent == null)
+            {
+                Coin3.Y = -256f;
+            }
+            else
+            {
+                Coin3.RelativeY = -256f;
+            }
+            
         }
         public override void ConvertToManuallyUpdated () 
         {

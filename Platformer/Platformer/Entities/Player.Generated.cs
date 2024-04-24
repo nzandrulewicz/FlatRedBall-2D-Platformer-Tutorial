@@ -373,14 +373,15 @@ namespace Platformer.Entities
 
         public HashSet<string> GroundCollidedAgainst { get; private set;} = new HashSet<string>();
         Platformer.Entities.PlatformerAnimationController PlatformerAnimationController;
+        public string EditModeType { get; set; } = "Platformer.Entities.Player";
         public System.Collections.Generic.Dictionary<FlatRedBall.Entities.IDamageArea, double> DamageAreaLastDamage { get; set; } = new System.Collections.Generic.Dictionary<FlatRedBall.Entities.IDamageArea, double>();
         public Action<decimal, FlatRedBall.Entities.IDamageArea> ReactToDamageReceived { get; set; }
         public Func<decimal, FlatRedBall.Entities.IDamageArea, decimal> ModifyDamageReceived { get; set; }
         public decimal CurrentHealth { get; set; }
         public Action<decimal, FlatRedBall.Entities.IDamageArea> Died { get; set; }
         public bool IsDamageReceivingEnabled { get; set; } = true;
-        public double InvulnerabilityTimeAfterDamage { get; set; } = 0;
         public double LastDamageTime { get; set; } = -999;
+        public double InvulnerabilityTimeAfterDamage { get; set; } = 0;
         protected FlatRedBall.Graphics.Layer LayerProvidedByContainer = null;
         public Player () 
         	: this(FlatRedBall.Screens.ScreenManager.CurrentScreen.ContentManagerName, true)
@@ -553,7 +554,7 @@ namespace Platformer.Entities
         public virtual void Activity () 
         {
             #if DEBUG
-            if(mLastTimeCalledActivity > 0 && mLastTimeCalledActivity == FlatRedBall.TimeManager.CurrentScreenTime)
+            if(TimeManager.TimeFactor > 0 && mLastTimeCalledActivity > 0 && mLastTimeCalledActivity == FlatRedBall.TimeManager.CurrentScreenTime)
             {
                 throw new System.Exception("Activity was called twice in the same frame. This can cause objects to move 2x as fast.");
             }
