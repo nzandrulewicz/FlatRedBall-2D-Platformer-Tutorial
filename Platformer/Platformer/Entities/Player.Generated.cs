@@ -615,6 +615,7 @@ namespace Platformer.Entities
             }
             AxisAlignedRectangleInstance.Width = 10f;
             AxisAlignedRectangleInstance.Height = 16f;
+            AxisAlignedRectangleInstance.Visible = false;
             mGeneratedCollision = new FlatRedBall.Math.Geometry.ShapeCollection();
             Collision.AxisAlignedRectangles.AddOneWay(mAxisAlignedRectangleInstance);
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
@@ -655,6 +656,7 @@ namespace Platformer.Entities
             }
             AxisAlignedRectangleInstance.Width = 10f;
             AxisAlignedRectangleInstance.Height = 16f;
+            AxisAlignedRectangleInstance.Visible = false;
             TeamIndex = 0;
             MaxHealth = 100m;
             GroundMovement = Entities.Player.PlatformerValuesStatic["Ground"];

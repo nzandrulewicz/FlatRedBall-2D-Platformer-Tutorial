@@ -151,8 +151,9 @@ namespace Platformer.Entities
                 mAxisAlignedRectangleInstance.CopyAbsoluteToRelative();
                 mAxisAlignedRectangleInstance.AttachTo(this, false);
             }
-            AxisAlignedRectangleInstance.Width = 32f;
-            AxisAlignedRectangleInstance.Height = 32f;
+            AxisAlignedRectangleInstance.Width = 16f;
+            AxisAlignedRectangleInstance.Height = 16f;
+            AxisAlignedRectangleInstance.Visible = false;
             mGeneratedCollision = new FlatRedBall.Math.Geometry.ShapeCollection();
             Collision.AxisAlignedRectangles.AddOneWay(mAxisAlignedRectangleInstance);
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
@@ -184,8 +185,9 @@ namespace Platformer.Entities
             SpriteInstance.TopTexturePixel = 128f;
             SpriteInstance.BottomTexturePixel = 144f;
             SpriteInstance.TextureScale = 1f;
-            AxisAlignedRectangleInstance.Width = 32f;
-            AxisAlignedRectangleInstance.Height = 32f;
+            AxisAlignedRectangleInstance.Width = 16f;
+            AxisAlignedRectangleInstance.Height = 16f;
+            AxisAlignedRectangleInstance.Visible = false;
         }
         public virtual void ConvertToManuallyUpdated () 
         {

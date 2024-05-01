@@ -122,13 +122,19 @@
         {
           "Type": "float",
           "Member": "Height",
-          "Value": 32.0,
+          "Value": 16.0,
           "Time": 0.0
         },
         {
           "Type": "float",
           "Member": "Width",
-          "Value": 32.0,
+          "Value": 16.0,
+          "Time": 0.0
+        },
+        {
+          "Type": "bool",
+          "Member": "Visible",
+          "Value": false,
           "Time": 0.0
         }
       ],

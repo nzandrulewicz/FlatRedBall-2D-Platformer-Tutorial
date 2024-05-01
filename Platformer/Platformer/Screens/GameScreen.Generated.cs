@@ -50,7 +50,9 @@ namespace Platformer.Screens
         private Platformer.GumRuntimes.GameScreenGumRuntime GumScreen;
         private FlatRedBall.Math.Collision.DelegateListVsSingleRelationship<Entities.Player, FlatRedBall.TileCollisions.TileShapeCollection> PlayerVsCloudCollision;
         private FlatRedBall.Math.Collision.DelegateListVsSingleRelationship<Entities.Player, FlatRedBall.TileCollisions.TileShapeCollection> PlayerVsSolidCollision;
+        private FlatRedBall.Math.Collision.ListVsListRelationship<Entities.Player, Entities.Coin> PlayerVsCoin;
         private FlatRedBall.Entities.CameraControllingEntity CameraControllingEntityInstance;
+        public event System.Action<Entities.Player, Entities.Coin> PlayerVsCoinCollided;
         global::Gum.Wireframe.GraphicalUiElement FlatRedBall.Gum.IGumScreenOwner.GumScreen { get; }
         void FlatRedBall.Gum.IGumScreenOwner.RefreshLayout() => RefreshLayoutInternal(null, null);
         Platformer.FormsControls.Screens.GameScreenGumForms Forms;
@@ -119,6 +121,15 @@ PlayerVsCloudCollision.CollisionOccurred += (first, second) =>
 }
 PlayerVsSolidCollision.Name = "PlayerVsSolidCollision";
 PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
+{
+}
+;
+
+            PlayerVsCoin = FlatRedBall.Math.Collision.CollisionManager.Self.CreateRelationship(PlayerList, CoinList);
+PlayerVsCoin.CollisionLimit = FlatRedBall.Math.Collision.CollisionLimit.All;
+PlayerVsCoin.ListVsListLoopingMode = FlatRedBall.Math.Collision.ListVsListLoopingMode.PreventDoubleChecksPerFrame;
+PlayerVsCoin.Name = "PlayerVsCoin";
+PlayerVsCoin.CollisionOccurred += (first, second) =>
 {
 }
 ;
@@ -236,6 +247,7 @@ PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
             }
             PlayerList.MakeTwoWay();
             CoinList.MakeTwoWay();
+            PlayerVsCoin.CollisionOccurred -= OnPlayerVsCoinCollidedTunnel;
             FlatRedBall.Math.Collision.CollisionManager.Self.BeforeCollision -= HandleBeforeCollisionGenerated;
             FlatRedBall.Math.Collision.CollisionManager.Self.Relationships.Clear();
             CustomDestroy();
@@ -244,6 +256,8 @@ PlayerVsSolidCollision.CollisionOccurred += (first, second) =>
         {
             bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
+            PlayerVsCoin.CollisionOccurred += OnPlayerVsCoinCollided;
+            PlayerVsCoin.CollisionOccurred += OnPlayerVsCoinCollidedTunnel;
             if (!PlayerList.Contains(Player1))
             {
                 PlayerList.Add(Player1);
