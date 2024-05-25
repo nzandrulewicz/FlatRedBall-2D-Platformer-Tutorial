@@ -15,6 +15,12 @@ namespace Platformer.Screens
         void OnPlayerVsCoinCollided (Entities.Player player, Entities.Coin coin) 
         {
             coin.Destroy();
+            score += 100;
+            GumScreen.ScoreInstance.Text = score.ToString();
+        }
+        void OnPlayerVsDoorCollided (Entities.Player player, Entities.Door door) 
+        {
+            MoveToScreen(door.TargetLevel);
         }
         
     }

@@ -22,10 +22,11 @@ namespace Platformer.Screens
     public partial class GameScreen
     {
 
+        int score;
+
         void CustomInitialize()
         {
-
-
+            GumScreen.ScoreInstance.Text = score.ToString();
         }
 
         void CustomActivity(bool firstTimeCalled)

@@ -102,6 +102,9 @@
       "Name": "Entities\\Coin"
     },
     {
+      "Name": "Entities\\Door"
+    },
+    {
       "Name": "Entities\\Player"
     }
   ],

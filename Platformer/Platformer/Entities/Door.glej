@@ -5,14 +5,6 @@
   "Source": "GLUE",
   "CreatedByOtherEntities": true,
   "Is2D": true,
-  "ReferencedFiles": [
-    {
-      "Name": "Entities/Player/FRBeefcakeSpriteSheet.png",
-      "IsSharedStatic": true,
-      "RuntimeType": "Microsoft.Xna.Framework.Graphics.Texture2D",
-      "ProjectsToExcludeFrom": []
-    }
-  ],
   "CustomVariables": [
     {
       "Properties": [
@@ -46,6 +38,18 @@
       ],
       "Name": "Z",
       "SetByDerived": true
+    },
+    {
+      "Properties": [
+        {
+          "Name": "Type",
+          "Value": "string",
+          "Type": "String"
+        }
+      ],
+      "Name": "TargetLevel",
+      "SetByDerived": true,
+      "Summary": "The name of the screen to go to when the Player collides with the door."
     }
   ],
   "Properties": [
@@ -62,53 +66,6 @@
   ],
   "NamedObjects": [
     {
-      "InstanceName": "SpriteInstance",
-      "SourceClassType": "FlatRedBall.Sprite",
-      "Properties": [
-        {
-          "Name": "AssociateWithFactory",
-          "Value": true,
-          "Type": "bool"
-        }
-      ],
-      "InstructionSaves": [
-        {
-          "Type": "float",
-          "Member": "BottomTexturePixel",
-          "Value": 144.0,
-          "Time": 0.0
-        },
-        {
-          "Type": "float",
-          "Member": "RightTexturePixel",
-          "Value": 16.0,
-          "Time": 0.0
-        },
-        {
-          "Type": "Texture2D",
-          "Member": "Texture",
-          "Value": "FRBeefcakeSpriteSheet",
-          "Time": 0.0
-        },
-        {
-          "Type": "float",
-          "Member": "TextureScale",
-          "Value": 1.0,
-          "Time": 0.0
-        },
-        {
-          "Type": "float",
-          "Member": "TopTexturePixel",
-          "Value": 128.0,
-          "Time": 0.0
-        }
-      ],
-      "SourceType": 2,
-      "SourceFile": "Sprite",
-      "AttachToContainer": true,
-      "GenerateTimedEmit": true
-    },
-    {
       "InstanceName": "AxisAlignedRectangleInstance",
       "SourceClassType": "FlatRedBall.Math.Geometry.AxisAlignedRectangle",
       "Properties": [
@@ -121,20 +78,14 @@
       "InstructionSaves": [
         {
           "Type": "float",
-          "Member": "Height",
-          "Value": 16.0,
-          "Time": 0.0
-        },
-        {
-          "Type": "bool",
-          "Member": "Visible",
-          "Value": false,
+          "Member": "Width",
+          "Value": 32.0,
           "Time": 0.0
         },
         {
           "Type": "float",
-          "Member": "Width",
-          "Value": 16.0,
+          "Member": "Height",
+          "Value": 32.0,
           "Time": 0.0
         }
       ],
@@ -145,6 +96,6 @@
       "GenerateTimedEmit": true
     }
   ],
-  "Name": "Entities\\Coin",
+  "Name": "Entities\\Door",
   "CustomClassesForExport": []
 }

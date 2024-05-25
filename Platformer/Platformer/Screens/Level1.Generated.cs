@@ -22,6 +22,7 @@ namespace Platformer.Screens
         private Platformer.Entities.Coin Coin1;
         private Platformer.Entities.Coin Coin2;
         private Platformer.Entities.Coin Coin3;
+        private Platformer.Entities.Door Door1;
         Platformer.FormsControls.Screens.Level1GumForms Forms;
         Platformer.GumRuntimes.Level1GumRuntime GumScreen;
         public Level1 () 
@@ -33,6 +34,7 @@ namespace Platformer.Screens
         {
             // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Player> PlayerList in Screens\Level1 (Screen) because it has its InstantiatedByBase set to true
             // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Coin> CoinList in Screens\Level1 (Screen) because it has its InstantiatedByBase set to true
+            // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Door> DoorList in Screens\Level1 (Screen) because it has its InstantiatedByBase set to true
         }
         public override void Initialize (bool addToManagers) 
         {
@@ -52,6 +54,10 @@ namespace Platformer.Screens
             Coin3 = new Platformer.Entities.Coin(ContentManagerName, false);
             Coin3.Name = "Coin3";
             Coin3.CreationSource = "Glue";
+            // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Door> DoorList in Screens\Level1 (Screen) because it has its InstantiatedByBase set to true
+            Door1 = new Platformer.Entities.Door(ContentManagerName, false);
+            Door1.Name = "Door1";
+            Door1.CreationSource = "Glue";
             GumScreen = Level1Gum;
             Forms = Level1Gum.FormsControl ?? new Platformer.FormsControls.Screens.Level1GumForms(Level1Gum);
             
@@ -71,6 +77,7 @@ namespace Platformer.Screens
             Coin1.AddToManagers(mLayer);
             Coin2.AddToManagers(mLayer);
             Coin3.AddToManagers(mLayer);
+            Door1.AddToManagers(mLayer);
             base.AddToManagers();
             CustomInitialize();
         }
@@ -221,6 +228,30 @@ namespace Platformer.Screens
                     Coin3.RelativeY = -256f;
                 }
             }
+            if (DoorList!= null)
+            {
+                if (!DoorList.Contains(Door1))
+                {
+                    DoorList.Add(Door1);
+                }
+                if (Door1.Parent == null)
+                {
+                    Door1.X = 592f;
+                }
+                else
+                {
+                    Door1.RelativeX = 592f;
+                }
+                if (Door1.Parent == null)
+                {
+                    Door1.Y = -208f;
+                }
+                else
+                {
+                    Door1.RelativeY = -208f;
+                }
+                Door1.TargetLevel = "Level2";
+            }
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
         }
         public override void AddToManagersBottomUp () 
@@ -252,6 +283,7 @@ namespace Platformer.Screens
                 Coin1.AssignCustomVariables(true);
                 Coin2.AssignCustomVariables(true);
                 Coin3.AssignCustomVariables(true);
+                Door1.AssignCustomVariables(true);
             }
             if (Player1.Parent == null)
             {
@@ -317,6 +349,23 @@ namespace Platformer.Screens
             {
                 Coin3.RelativeY = -256f;
             }
+            if (Door1.Parent == null)
+            {
+                Door1.X = 592f;
+            }
+            else
+            {
+                Door1.RelativeX = 592f;
+            }
+            if (Door1.Parent == null)
+            {
+                Door1.Y = -208f;
+            }
+            else
+            {
+                Door1.RelativeY = -208f;
+            }
+            Door1.TargetLevel = "Level2";
             
         }
         public override void ConvertToManuallyUpdated () 

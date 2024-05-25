@@ -21,6 +21,7 @@ namespace Platformer.Screens
         protected FlatRedBall.Math.PositionedObjectList<Platformer.Entities.Player> PlayerList = new FlatRedBall.Math.PositionedObjectList<Platformer.Entities.Player>();
         protected Platformer.Entities.Player Player1;
         protected FlatRedBall.Math.PositionedObjectList<Platformer.Entities.Coin> CoinList = new FlatRedBall.Math.PositionedObjectList<Platformer.Entities.Coin>();
+        protected FlatRedBall.Math.PositionedObjectList<Platformer.Entities.Door> DoorList = new FlatRedBall.Math.PositionedObjectList<Platformer.Entities.Door>();
         protected FlatRedBall.TileGraphics.LayeredTileMap Map;
         protected FlatRedBall.TileCollisions.TileShapeCollection mSolidCollision;
         public FlatRedBall.TileCollisions.TileShapeCollection SolidCollision
@@ -51,8 +52,10 @@ namespace Platformer.Screens
         private FlatRedBall.Math.Collision.DelegateListVsSingleRelationship<Entities.Player, FlatRedBall.TileCollisions.TileShapeCollection> PlayerVsCloudCollision;
         private FlatRedBall.Math.Collision.DelegateListVsSingleRelationship<Entities.Player, FlatRedBall.TileCollisions.TileShapeCollection> PlayerVsSolidCollision;
         private FlatRedBall.Math.Collision.ListVsListRelationship<Entities.Player, Entities.Coin> PlayerVsCoin;
+        private FlatRedBall.Math.Collision.ListVsListRelationship<Entities.Player, Entities.Door> PlayerVsDoor;
         private FlatRedBall.Entities.CameraControllingEntity CameraControllingEntityInstance;
         public event System.Action<Entities.Player, Entities.Coin> PlayerVsCoinCollided;
+        public event System.Action<Entities.Player, Entities.Door> PlayerVsDoorCollided;
         global::Gum.Wireframe.GraphicalUiElement FlatRedBall.Gum.IGumScreenOwner.GumScreen { get; }
         void FlatRedBall.Gum.IGumScreenOwner.RefreshLayout() => RefreshLayoutInternal(null, null);
         Platformer.FormsControls.Screens.GameScreenGumForms Forms;
@@ -66,6 +69,7 @@ namespace Platformer.Screens
         {
             PlayerList.Name = "PlayerList";
             CoinList.Name = "CoinList";
+            DoorList.Name = "DoorList";
             // Not instantiating for FlatRedBall.TileGraphics.LayeredTileMap Map in Screens\GameScreen (Screen) because properties on the object prevent it
             // Not instantiating for FlatRedBall.TileCollisions.TileShapeCollection SolidCollision in Screens\GameScreen (Screen) because properties on the object prevent it
             // Not instantiating for FlatRedBall.TileCollisions.TileShapeCollection CloudCollision in Screens\GameScreen (Screen) because properties on the object prevent it
@@ -79,6 +83,7 @@ namespace Platformer.Screens
             Player1.Name = "Player1";
             Player1.CreationSource = "Glue";
             CoinList?.Clear();
+            DoorList?.Clear();
             // Not instantiating for FlatRedBall.TileGraphics.LayeredTileMap Map in Screens\GameScreen (Screen) because properties on the object prevent it
             // Not instantiating for FlatRedBall.TileCollisions.TileShapeCollection SolidCollision in Screens\GameScreen (Screen) because properties on the object prevent it
             // Not instantiating for FlatRedBall.TileCollisions.TileShapeCollection CloudCollision in Screens\GameScreen (Screen) because properties on the object prevent it
@@ -130,6 +135,15 @@ PlayerVsCoin.CollisionLimit = FlatRedBall.Math.Collision.CollisionLimit.All;
 PlayerVsCoin.ListVsListLoopingMode = FlatRedBall.Math.Collision.ListVsListLoopingMode.PreventDoubleChecksPerFrame;
 PlayerVsCoin.Name = "PlayerVsCoin";
 PlayerVsCoin.CollisionOccurred += (first, second) =>
+{
+}
+;
+
+            PlayerVsDoor = FlatRedBall.Math.Collision.CollisionManager.Self.CreateRelationship(PlayerList, DoorList);
+PlayerVsDoor.CollisionLimit = FlatRedBall.Math.Collision.CollisionLimit.All;
+PlayerVsDoor.ListVsListLoopingMode = FlatRedBall.Math.Collision.ListVsListLoopingMode.PreventDoubleChecksPerFrame;
+PlayerVsDoor.Name = "PlayerVsDoor";
+PlayerVsDoor.CollisionOccurred += (first, second) =>
 {
 }
 ;
@@ -192,6 +206,14 @@ PlayerVsCoin.CollisionOccurred += (first, second) =>
                         CoinList[i].Activity();
                     }
                 }
+                for (int i = DoorList.Count - 1; i > -1; i--)
+                {
+                    if (i < DoorList.Count)
+                    {
+                        // We do the extra if-check because activity could destroy any number of entities
+                        DoorList[i].Activity();
+                    }
+                }
                 CameraControllingEntityInstance.Activity();
             }
             else
@@ -224,11 +246,13 @@ PlayerVsCoin.CollisionOccurred += (first, second) =>
             base.Destroy();
             Factories.PlayerFactory.Destroy();
             Factories.CoinFactory.Destroy();
+            Factories.DoorFactory.Destroy();
             GameScreenGum.RemoveFromManagers(); FlatRedBall.FlatRedBallServices.GraphicsOptions.SizeOrOrientationChanged -= RefreshLayoutInternal;
             GameScreenGum = null;
             
             PlayerList.MakeOneWay();
             CoinList.MakeOneWay();
+            DoorList.MakeOneWay();
             for (int i = PlayerList.Count - 1; i > -1; i--)
             {
                 PlayerList[i].Destroy();
@@ -236,6 +260,10 @@ PlayerVsCoin.CollisionOccurred += (first, second) =>
             for (int i = CoinList.Count - 1; i > -1; i--)
             {
                 CoinList[i].Destroy();
+            }
+            for (int i = DoorList.Count - 1; i > -1; i--)
+            {
+                DoorList[i].Destroy();
             }
             if (HudLayer != null)
             {
@@ -247,7 +275,9 @@ PlayerVsCoin.CollisionOccurred += (first, second) =>
             }
             PlayerList.MakeTwoWay();
             CoinList.MakeTwoWay();
+            DoorList.MakeTwoWay();
             PlayerVsCoin.CollisionOccurred -= OnPlayerVsCoinCollidedTunnel;
+            PlayerVsDoor.CollisionOccurred -= OnPlayerVsDoorCollidedTunnel;
             FlatRedBall.Math.Collision.CollisionManager.Self.BeforeCollision -= HandleBeforeCollisionGenerated;
             FlatRedBall.Math.Collision.CollisionManager.Self.Relationships.Clear();
             CustomDestroy();
@@ -258,6 +288,8 @@ PlayerVsCoin.CollisionOccurred += (first, second) =>
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
             PlayerVsCoin.CollisionOccurred += OnPlayerVsCoinCollided;
             PlayerVsCoin.CollisionOccurred += OnPlayerVsCoinCollidedTunnel;
+            PlayerVsDoor.CollisionOccurred += OnPlayerVsDoorCollided;
+            PlayerVsDoor.CollisionOccurred += OnPlayerVsDoorCollidedTunnel;
             if (!PlayerList.Contains(Player1))
             {
                 PlayerList.Add(Player1);
@@ -308,6 +340,10 @@ PlayerVsCoin.CollisionOccurred += (first, second) =>
             {
                 CoinList[i].Destroy();
             }
+            for (int i = DoorList.Count - 1; i > -1; i--)
+            {
+                DoorList[i].Destroy();
+            }
             if (HudLayer != null)
             {
                 FlatRedBall.SpriteManager.RemoveLayer(HudLayer);
@@ -350,6 +386,7 @@ PlayerVsCoin.CollisionOccurred += (first, second) =>
             }
             CameraControllingEntityInstance.Targets = PlayerList;
             CameraControllingEntityInstance.Map = Map;
+            
         }
         public virtual void ConvertToManuallyUpdated () 
         {
@@ -360,6 +397,10 @@ PlayerVsCoin.CollisionOccurred += (first, second) =>
             for (int i = 0; i < CoinList.Count; i++)
             {
                 CoinList[i].ConvertToManuallyUpdated();
+            }
+            for (int i = 0; i < DoorList.Count; i++)
+            {
+                DoorList[i].ConvertToManuallyUpdated();
             }
             if (Map != null)
             {
@@ -420,8 +461,10 @@ PlayerVsCoin.CollisionOccurred += (first, second) =>
         {
             Factories.PlayerFactory.Initialize(ContentManagerName);
             Factories.CoinFactory.Initialize(ContentManagerName);
+            Factories.DoorFactory.Initialize(ContentManagerName);
             Factories.PlayerFactory.AddList(PlayerList);
             Factories.CoinFactory.AddList(CoinList);
+            Factories.DoorFactory.AddList(DoorList);
         }
         [System.Obsolete("Use GetFile instead")]
         public static object GetStaticMember (string memberName) 
@@ -480,6 +523,22 @@ PlayerVsCoin.CollisionOccurred += (first, second) =>
             for (int i = 0; i < CoinList.Count; i++)
             {
                 var item = CoinList[i];
+                item.LastFrameItemsCollidedAgainst.Clear();
+                foreach (var name in item.ItemsCollidedAgainst)
+                {
+                    item.LastFrameItemsCollidedAgainst.Add(name);
+                }
+                item.ItemsCollidedAgainst.Clear();
+                item.LastFrameObjectsCollidedAgainst.Clear();
+                foreach (var name in item.ObjectsCollidedAgainst)
+                {
+                    item.LastFrameObjectsCollidedAgainst.Add(name);
+                }
+                item.ObjectsCollidedAgainst.Clear();
+            }
+            for (int i = 0; i < DoorList.Count; i++)
+            {
+                var item = DoorList[i];
                 item.LastFrameItemsCollidedAgainst.Clear();
                 foreach (var name in item.ItemsCollidedAgainst)
                 {

@@ -30,6 +30,7 @@ namespace Platformer.Screens
         {
             // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Player> PlayerList in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
             // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Coin> CoinList in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
+            // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Door> DoorList in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
         }
         public override void Initialize (bool addToManagers) 
         {
@@ -40,6 +41,7 @@ namespace Platformer.Screens
             // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Player> PlayerList in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
             // skipping instantiation of Player Player1 in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
             // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Coin> CoinList in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
+            // skipping instantiation of FlatRedBall.Math.PositionedObjectList<Door> DoorList in Screens\Level2 (Screen) because it has its InstantiatedByBase set to true
             GumScreen = Level2Gum;
             Forms = Level2Gum.FormsControl ?? new Platformer.FormsControls.Screens.Level2GumForms(Level2Gum);
             
@@ -144,6 +146,9 @@ namespace Platformer.Screens
                 }
             }
             if (CoinList!= null)
+            {
+            }
+            if (DoorList!= null)
             {
             }
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;

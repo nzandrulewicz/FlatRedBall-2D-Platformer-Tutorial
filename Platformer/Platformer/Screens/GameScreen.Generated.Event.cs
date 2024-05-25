@@ -19,5 +19,12 @@ namespace Platformer.Screens
                 PlayerVsCoinCollided(player, coin);
             }
         }
+        void OnPlayerVsDoorCollidedTunnel (Entities.Player player, Entities.Door door) 
+        {
+            if (this.PlayerVsDoorCollided != null)
+            {
+                PlayerVsDoorCollided(player, door);
+            }
+        }
     }
 }

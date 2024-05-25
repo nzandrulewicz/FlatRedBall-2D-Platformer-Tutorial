@@ -25,6 +25,12 @@ namespace Platformer.GumRuntimes
                 switch(mCurrentVariableState)
                 {
                     case  VariableState.Default:
+                        ScoreInstance.HorizontalAlignment = RenderingLibrary.Graphics.HorizontalAlignment.Right;
+                        ScoreInstance.Text = "00000";
+                        ScoreInstance.Width = 52f;
+                        ScoreInstance.WidthUnits = Gum.DataTypes.DimensionUnitType.Absolute;
+                        ScoreInstance.X = 32f;
+                        ScoreInstance.Y = 32f;
                         break;
                 }
             }
@@ -39,14 +45,62 @@ namespace Platformer.GumRuntimes
                 throw new System.Exception("interpolationValue cannot be NaN");
             }
             #endif
+            bool setScoreInstanceWidthFirstValue = false;
+            bool setScoreInstanceWidthSecondValue = false;
+            float ScoreInstanceWidthFirstValue= 0;
+            float ScoreInstanceWidthSecondValue= 0;
+            bool setScoreInstanceXFirstValue = false;
+            bool setScoreInstanceXSecondValue = false;
+            float ScoreInstanceXFirstValue= 0;
+            float ScoreInstanceXSecondValue= 0;
+            bool setScoreInstanceYFirstValue = false;
+            bool setScoreInstanceYSecondValue = false;
+            float ScoreInstanceYFirstValue= 0;
+            float ScoreInstanceYSecondValue= 0;
             switch(firstState)
             {
                 case  VariableState.Default:
+                    if (interpolationValue < 1)
+                    {
+                        this.ScoreInstance.HorizontalAlignment = RenderingLibrary.Graphics.HorizontalAlignment.Right;
+                    }
+                    if (interpolationValue < 1)
+                    {
+                        this.ScoreInstance.Text = "00000";
+                    }
+                    setScoreInstanceWidthFirstValue = true;
+                    ScoreInstanceWidthFirstValue = 52f;
+                    if (interpolationValue < 1)
+                    {
+                        this.ScoreInstance.WidthUnits = Gum.DataTypes.DimensionUnitType.Absolute;
+                    }
+                    setScoreInstanceXFirstValue = true;
+                    ScoreInstanceXFirstValue = 32f;
+                    setScoreInstanceYFirstValue = true;
+                    ScoreInstanceYFirstValue = 32f;
                     break;
             }
             switch(secondState)
             {
                 case  VariableState.Default:
+                    if (interpolationValue >= 1)
+                    {
+                        this.ScoreInstance.HorizontalAlignment = RenderingLibrary.Graphics.HorizontalAlignment.Right;
+                    }
+                    if (interpolationValue >= 1)
+                    {
+                        this.ScoreInstance.Text = "00000";
+                    }
+                    setScoreInstanceWidthSecondValue = true;
+                    ScoreInstanceWidthSecondValue = 52f;
+                    if (interpolationValue >= 1)
+                    {
+                        this.ScoreInstance.WidthUnits = Gum.DataTypes.DimensionUnitType.Absolute;
+                    }
+                    setScoreInstanceXSecondValue = true;
+                    ScoreInstanceXSecondValue = 32f;
+                    setScoreInstanceYSecondValue = true;
+                    ScoreInstanceYSecondValue = 32f;
                     break;
             }
             var wasSuppressed = mIsLayoutSuspended;
@@ -55,6 +109,18 @@ namespace Platformer.GumRuntimes
             if (shouldSuspend)
             {
                 SuspendLayout(suspendRecursively);
+            }
+            if (setScoreInstanceWidthFirstValue && setScoreInstanceWidthSecondValue)
+            {
+                ScoreInstance.Width = ScoreInstanceWidthFirstValue * (1 - interpolationValue) + ScoreInstanceWidthSecondValue * interpolationValue;
+            }
+            if (setScoreInstanceXFirstValue && setScoreInstanceXSecondValue)
+            {
+                ScoreInstance.X = ScoreInstanceXFirstValue * (1 - interpolationValue) + ScoreInstanceXSecondValue * interpolationValue;
+            }
+            if (setScoreInstanceYFirstValue && setScoreInstanceYSecondValue)
+            {
+                ScoreInstance.Y = ScoreInstanceYFirstValue * (1 - interpolationValue) + ScoreInstanceYSecondValue * interpolationValue;
             }
             if (interpolationValue < 1)
             {
@@ -143,6 +209,54 @@ namespace Platformer.GumRuntimes
             switch(state)
             {
                 case  VariableState.Default:
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.HorizontalAlignment",
+                        Type = "HorizontalAlignment",
+                        Value = ScoreInstance.HorizontalAlignment
+                    }
+                    );
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.Text",
+                        Type = "string",
+                        Value = ScoreInstance.Text
+                    }
+                    );
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.Width",
+                        Type = "float",
+                        Value = ScoreInstance.Width
+                    }
+                    );
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.Width Units",
+                        Type = "DimensionUnitType",
+                        Value = ScoreInstance.WidthUnits
+                    }
+                    );
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.X",
+                        Type = "float",
+                        Value = ScoreInstance.X
+                    }
+                    );
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.Y",
+                        Type = "float",
+                        Value = ScoreInstance.Y
+                    }
+                    );
                     break;
             }
             return newState;
@@ -153,6 +267,54 @@ namespace Platformer.GumRuntimes
             switch(state)
             {
                 case  VariableState.Default:
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.HorizontalAlignment",
+                        Type = "HorizontalAlignment",
+                        Value = ScoreInstance.HorizontalAlignment
+                    }
+                    );
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.Text",
+                        Type = "string",
+                        Value = ScoreInstance.Text
+                    }
+                    );
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.Width",
+                        Type = "float",
+                        Value = ScoreInstance.Width + 52f
+                    }
+                    );
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.Width Units",
+                        Type = "DimensionUnitType",
+                        Value = ScoreInstance.WidthUnits
+                    }
+                    );
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.X",
+                        Type = "float",
+                        Value = ScoreInstance.X + 32f
+                    }
+                    );
+                    newState.Variables.Add(new Gum.DataTypes.Variables.VariableSave()
+                    {
+                        SetsValue = true,
+                        Name = "ScoreInstance.Y",
+                        Type = "float",
+                        Value = ScoreInstance.Y + 32f
+                    }
+                    );
                     break;
             }
             return newState;
@@ -172,6 +334,7 @@ namespace Platformer.GumRuntimes
             base.ApplyState(state);
         }
         private bool tryCreateFormsObject;
+        public Platformer.GumRuntimes.TextRuntime ScoreInstance { get; set; }
         public GameScreenGumRuntime () 
         	: this(true, true)
         {
@@ -205,6 +368,7 @@ namespace Platformer.GumRuntimes
         }
         private void AssignInternalReferences () 
         {
+            ScoreInstance = this.GetGraphicalUiElementByName("ScoreInstance") as Platformer.GumRuntimes.TextRuntime;
             if (tryCreateFormsObject)
             {
                 FormsControlAsObject = new Platformer.FormsControls.Screens.GameScreenGumForms(this);
